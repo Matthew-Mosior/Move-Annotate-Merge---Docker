@@ -1,8 +1,12 @@
 #Work from the latest Fedora linux.
 FROM fedora:latest
 
+#Set custom export.
+RUN export HOME=$TMP
+
 #Grab updates.
 RUN dnf install -y haskell-platform
+RUN dnf install cabal-install
 
 #Grab libraries that MoveAnnotateMerge.hs requires.
 RUN cabal update
