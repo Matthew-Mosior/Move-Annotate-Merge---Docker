@@ -10,3 +10,4 @@ RUN cabal install split
 RUN cabal install process
 RUN cabal install boxes
 RUN cabal install regex-compat
+RUN cabal install temporary
