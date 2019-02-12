@@ -8,8 +8,8 @@ RUN mkdir new
 #Move cabal config file to new.
 RUN cabal --config-file="/new/.cabal/config" update
 
-#Sed statement.
-RUN sed 's/\/root/\/new/g' /new/.cabal/config
+#Sed statements.
+RUN sed -i 's/\/root/\/new/g' /new/.cabal/config 
 
 #USER root
 
