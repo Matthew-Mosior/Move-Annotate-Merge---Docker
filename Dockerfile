@@ -2,6 +2,8 @@
 #FROM fedora:latest
 FROM haskell:8
 
+USER root
+
 #Make .cabal file.
 #RUN touch .cabal
 
