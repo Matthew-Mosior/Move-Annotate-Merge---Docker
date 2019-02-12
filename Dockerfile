@@ -2,7 +2,16 @@
 #FROM fedora:latest
 FROM haskell:8
 
-USER root
+#Make new directory.
+RUN mkdir new
+
+#Move cabal config file to new.
+RUN cabal --config-file="/new/.cabal/config" update
+
+#Sed statement.
+RUN sed 's/\/root/\/new/g' /new/.cabal/config
+
+#USER root
 
 #Make .cabal file.
 #RUN touch .cabal
@@ -10,14 +19,19 @@ USER root
 #Set custom export.
 #RUN export HOME=$TMP
 
-#Grab updates.
+#Grab the Haskell Platform.
 #RUN dnf install -y haskell-platform
 #RUN dnf install cabal-install
 
+#RUN cabal user-config update
+
+#Update Cabal Configuration File as to where to install directories.
+#RUN echo "install dirs" >> /root/.cabal/config 
+
 #Grab libraries that MoveAnnotateMerge.hs requires.
-RUN cabal update
-RUN cabal install split
-RUN cabal install process
-RUN cabal install boxes
-RUN cabal install regex-compat
-RUN cabal install temporary
+RUN cabal --config-file="/new/.cabal/config" update
+RUN cabal --config-file="/new/.cabal/config" install split
+RUN cabal --config-file="/new/.cabal/config" install process
+RUN cabal --config-file="/new/.cabal/config" install boxes
+RUN cabal --config-file="/new/.cabal/config" install regex-compat
+RUN cabal --config-file="/new/.cabal/config" install temporary
