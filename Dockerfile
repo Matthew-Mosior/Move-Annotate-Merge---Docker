@@ -5,13 +5,13 @@ FROM haskell:8
 RUN apt-get update -y && apt-get install -y vim \
 libnss-sss
 
-#Make a new user.
+#Make a new user (haskelluser).
 RUN useradd -ms /bin/bash haskelluser
 
 #Create a new group.
 RUN addgroup --gid 1024 haskellgroup
 
-#Give newgroup access to newgroup.
+#Give newgroup access to haskelluser.
 RUN usermod -a -G haskellgroup haskelluser
 
 #Set the haskelluser.
@@ -28,5 +28,5 @@ RUN cabal install boxes
 RUN cabal install regex-compat
 RUN cabal install temporary
 
-#Set the hom directory.
+#Set the home directory.
 ENV HOME=/home/haskelluser
