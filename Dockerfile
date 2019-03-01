@@ -3,7 +3,7 @@ FROM haskell:8
 
 #Update apt-get and get vim.
 RUN apt-get update -y && apt-get install -y vim \
-libnss-sss
+libnss-sss && apt-get install -y git-core 
 
 #Make a new user (haskelluser).
 RUN useradd -ms /bin/bash haskelluser
@@ -28,5 +28,17 @@ RUN cabal install boxes
 RUN cabal install regex-compat
 RUN cabal install temporary
 
-#Set the home directory.
-ENV HOME=/home/haskelluser
+#Change working directory to /home/haskelluser.
+WORKDIR "/home/haskelluser"
+
+#Git clone the repository to /home/haskelluser.
+RUN git clone https://github.com/Matthew-Mosior/Move-Annotate-Merge.git
+
+#Compile MoveAnnotateMerge.hs.
+RUN ghc -O2 -o MAM Move-Annotate-Merge/src/MoveAnnotateMerge.hs
+
+#Set alias in bashrc to use MAM.
+RUN echo "alias MAM='/home/haskelluser/MAM'" > /home/haskelluser/.bashrc
+
+#Source bashrc.
+RUN /bin/bash -c "source /home/haskelluser/.bashrc"
