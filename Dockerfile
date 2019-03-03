@@ -34,11 +34,8 @@ WORKDIR "/home/haskelluser"
 #Git clone the repository to /home/haskelluser.
 RUN git clone https://github.com/Matthew-Mosior/Move-Annotate-Merge.git
 
-#Compile MoveAnnotateMerge.hs.
-RUN ghc -O2 -o MAM Move-Annotate-Merge/src/MoveAnnotateMerge.hs
-
 #Set alias in bashrc to use MAM.
-RUN echo "alias MAM='/home/haskelluser/MAM'" > /home/haskelluser/.bashrc
+RUN echo "alias MAM='/home/haskelluser/Move-Annotate-Merge/bin/MAM'" > /home/haskelluser/.bashrc
 
 #Source bashrc.
 RUN /bin/bash -c "source /home/haskelluser/.bashrc"
